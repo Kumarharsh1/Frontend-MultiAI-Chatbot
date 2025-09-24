@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import { ChevronUp, ChevronDown, Bot, MessageSquare, Zap, Sparkles } from 'lucide-react'
+import { useState } from 'react';
+import { ChevronUp, ChevronDown, Bot, MessageSquare, Zap, Sparkles } from 'lucide-react';
 
-const ChatSelector = ({ activeChatbot, setActiveChatbot, configs }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false)
+const ChatSelector = ({ activeChatbot, setActiveChatbot, chatbotConfigs = {} }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const getIconComponent = (icon) => {
     const iconMap = {
@@ -10,14 +10,14 @@ const ChatSelector = ({ activeChatbot, setActiveChatbot, configs }) => {
       '🤝': Bot,
       '🎨': Sparkles,
       '💻': Zap
-    }
-    const IconComponent = iconMap[icon] || Bot
-    return <IconComponent className="h-5 w-5" />
-  }
+    };
+    const IconComponent = iconMap[icon] || Bot;
+    return <IconComponent className="h-5 w-5" />;
+  };
 
   return (
     <div className="bg-silver-black-800/50 backdrop-blur-lg rounded-2xl border border-silver-black-700">
-      <div 
+      <div
         className="flex items-center justify-between p-4 cursor-pointer hover:bg-silver-black-700/50 transition-colors rounded-t-2xl"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
@@ -29,10 +29,10 @@ const ChatSelector = ({ activeChatbot, setActiveChatbot, configs }) => {
           {isCollapsed ? <ChevronDown className="h-5 w-5" /> : <ChevronUp className="h-5 w-5" />}
         </button>
       </div>
-      
+
       {!isCollapsed && (
         <div className="p-4 space-y-3">
-          {Object.entries(configs).map(([key, config]) => (
+          {Object.entries(chatbotConfigs).map(([key, config]) => (
             <button
               key={key}
               onClick={() => setActiveChatbot(key)}
@@ -43,27 +43,27 @@ const ChatSelector = ({ activeChatbot, setActiveChatbot, configs }) => {
               }`}
             >
               <div className="flex items-center space-x-3">
-                <div className={`p-2 rounded-lg ${
-                  activeChatbot === key 
-                    ? 'bg-white/20' 
-                    : 'bg-silver-black-600 group-hover:bg-silver-black-500'
-                }`}>
+                <div
+                  className={`p-2 rounded-lg ${
+                    activeChatbot === key
+                      ? 'bg-white/20'
+                      : 'bg-silver-black-600 group-hover:bg-silver-black-500'
+                  }`}
+                >
                   {getIconComponent(config.icon)}
                 </div>
                 <div className="flex-1">
                   <div className="font-medium text-sm">{config.name}</div>
                   <div className="text-xs opacity-80 mt-1">{config.description}</div>
                 </div>
-                {activeChatbot === key && (
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                )}
+                {activeChatbot === key && <div className="w-2 h-2 bg-white rounded-full animate-pulse" />}
               </div>
             </button>
           ))}
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ChatSelector
+export default ChatSelector;

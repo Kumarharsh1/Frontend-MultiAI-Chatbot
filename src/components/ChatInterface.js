@@ -11,7 +11,6 @@ const ChatInterface = ({ chatbotType, service, chatbotConfig, connectionError })
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-
   useEffect(() => scrollToBottom(), [messages]);
 
   useEffect(() => {
@@ -50,16 +49,13 @@ const ChatInterface = ({ chatbotType, service, chatbotConfig, connectionError })
         history: messages.slice(-4).map(msg => ({ role: msg.role, content: msg.content }))
       });
 
-      const assistantMessage = {
+      setMessages(prev => [...prev, {
         role: 'assistant',
         content: data.content,
         timestamp: new Date().toISOString(),
         model: data.model || service,
         error: data.error || false
-      };
-
-      setMessages(prev => [...prev, assistantMessage]);
-
+      }]);
     } catch (err) {
       console.error(err);
       setApiError(err.message);

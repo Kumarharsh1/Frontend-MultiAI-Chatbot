@@ -7,6 +7,8 @@ const ChatInterface = ({ chatbotType, service, chatbotConfig, connectionError })
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
+  const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
@@ -48,7 +50,7 @@ const ChatInterface = ({ chatbotType, service, chatbotConfig, connectionError })
     setIsLoading(true)
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/chat', {
+      const response = await fetch(`${API_BASE}/api/v1/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

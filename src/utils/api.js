@@ -13,7 +13,7 @@ export async function getAvailableServices() {
   }
 }
 
-export async function sendMessage(message, chatbotType, service, history = []) {
+export async function chatWithBackend(message, chatbotType, service, history = []) {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/chat`, {
       method: "POST",

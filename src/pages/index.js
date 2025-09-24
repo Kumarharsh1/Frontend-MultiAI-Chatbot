@@ -9,8 +9,9 @@ export default function Home() {
   const [availableServices, setAvailableServices] = useState({})
 
   useEffect(() => {
-    // Check available services
-    fetch('http://localhost:8000/api/v1/services')
+    const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL
+
+    fetch(`${API_BASE}/api/v1/services`)
       .then(res => res.json())
       .then(data => setAvailableServices(data))
       .catch(err => console.error('Error fetching services:', err))

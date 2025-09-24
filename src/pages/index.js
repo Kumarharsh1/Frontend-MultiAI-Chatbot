@@ -8,19 +8,14 @@ export default function Home() {
   const [service, setService] = useState('groq');
   const [availableServices, setAvailableServices] = useState({});
   const [connectionError, setConnectionError] = useState(null);
-  const [isTestingConnection, setIsTestingConnection] = useState(false);
 
   const testBackendConnection = async () => {
-    setIsTestingConnection(true);
-    setConnectionError(null);
     try {
       const data = await getAvailableServices();
-      setAvailableServices(data);
-    } catch (error) {
-      setConnectionError(`Cannot connect to backend: ${error.message}`);
+      setAvailableServices(data || {});
+    } catch (err) {
+      setConnectionError(`Cannot connect to backend: ${err.message}`);
       setAvailableServices({ groq: true, databricks: true });
-    } finally {
-      setIsTestingConnection(false);
     }
   };
 
@@ -39,6 +34,7 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-white font-bold">MultiAI Chatbot</h1>
           <ChatSelector
+            availableServices={availableServices || {}}
             activeChatbot={activeChatbot}
             setActiveChatbot={setActiveChatbot}
             chatbotConfigs={chatbotConfigs}

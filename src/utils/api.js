@@ -1,4 +1,3 @@
-// utils/api.js
 export const chatWithBackend = async ({ message, chatbot_type = "personal", service = "databricks", history = [] }) => {
   const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL;
   

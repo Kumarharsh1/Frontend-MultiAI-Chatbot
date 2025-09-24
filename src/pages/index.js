@@ -19,7 +19,9 @@ export default function Home() {
     }
   };
 
-  useEffect(() => { testBackendConnection(); }, []);
+  useEffect(() => {
+    testBackendConnection();
+  }, []);
 
   const chatbotConfigs = {
     news: { name: "News Assistant", description: "Get the latest news", icon: "📰", color: "from-blue-500 to-purple-600" },
@@ -34,10 +36,9 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <h1 className="text-white font-bold">MultiAI Chatbot</h1>
           <ChatSelector
-            availableServices={availableServices || {}}
             activeChatbot={activeChatbot}
             setActiveChatbot={setActiveChatbot}
-            chatbotConfigs={chatbotConfigs}
+            configs={chatbotConfigs} // must match ChatSelector prop
           />
         </div>
       </header>
